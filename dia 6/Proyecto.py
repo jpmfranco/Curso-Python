@@ -91,9 +91,9 @@ def eliminar_categoria(categoria):
     else:
         print("No existe esa categoria")
 
-
+opcion = 0
 terminado = False
-while terminado == False:
+while terminado == False and opcion > 0 and opcion < 7:
     print("-"*20+'|Bienvenido al recetario|'+'-'*20)
     ruta = Path(Path.home(),"Recetas")
     print(f"Las recetas se encuentran en: {ruta}")
@@ -137,3 +137,5 @@ while terminado == False:
         terminado = True
     else:
         print("Error de eleccion, elija de nuevo...")
+else:
+    print("Error de numero")
