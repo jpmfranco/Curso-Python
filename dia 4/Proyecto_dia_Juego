@@ -1,0 +1,20 @@
+from random import *
+print("-|Bienvenido al juego de adivina al numero|-")
+name = input("Dame tu nombre para empezar: ")
+num = randint(1,100)
+attempts = 0
+print(f"Hola que tal {name}! tienes 8 intentos para adivinar el numero que yo elegí estas listo?\nComenzamos!")
+while attempts < 8:
+    num1 = int(input("Dame un numero del 1 al 100: "))
+    if num1 < 1 or num1> 100:
+        print("Elegiste un numero que no esta permitido...\n\n")
+    elif num1 < num:
+        print("Elegiste un numero menor al que pensé\n\n")
+    elif num1 > num:
+        print("Elegiste un numero mayor al que pensé\n\n")
+    elif num1 == num:
+        print(f"Buena eleccion {name}! acertaste al numero que estaba pensando! lo acertaste en {attempts+1} intentos")
+        break
+    attempts+=1
+else:
+    print(f"Lastima! se te acabaron los intentos {name}")
