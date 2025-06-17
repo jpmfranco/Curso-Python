@@ -44,9 +44,15 @@ def leer_receta(receta,categoria):
         system("cls")
 
     else:
-        print("Dame bien el nombre de la receta")
-        system("Pause")
-        system("cls")
+        print(receta)
+        if receta  == '':
+            print("No existen recetas")
+            system("Pause")
+            system("cls")
+        else:
+            print("Dame bien el nombre de la receta")
+            system("Pause")
+            system("cls")
 
 
 #crear receta
