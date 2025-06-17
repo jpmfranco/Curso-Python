@@ -29,7 +29,7 @@ def mostrar_recetas(categoria):
     
 
 def elegir_receta():
-    eleccion = input("¿Que receta quieres? ")
+    eleccion = input("¿Que receta quieres?(Si no hay recetas da enter) ")
     return eleccion
     
 
