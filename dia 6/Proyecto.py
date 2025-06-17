@@ -65,7 +65,7 @@ def crear_categoria(): # nombre
     nombre = input("Dame el nombre de la categoria: ")
     ruta  = Path(Path.home(),"Recetas",nombre)
     Ruta = os.makedirs(ruta)
-    listacat.append(nombre)
+    listacat.append(nombre.capitalize())
     print(Ruta)
   
 
