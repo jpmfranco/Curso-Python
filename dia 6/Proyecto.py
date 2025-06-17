@@ -4,7 +4,7 @@ import os
 ruta = Path(Path.home(),"Recetas")
 listacat = [c.name for c in ruta.glob("**") if c != ruta]
 #leer recetas
-def elegir_categoria():
+def elegir_categoria(): 
     band = True
     while band:
         print("Categorias: \n")
