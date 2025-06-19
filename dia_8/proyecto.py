@@ -10,21 +10,20 @@ def menu():
 [3]- Cosmeticos""")
         try:
             opcion = int(input())
-        
             if opcion == 1:
                 dec = p.decorardor_turno(p.turno_perfumeria)
-                
+    
             elif opcion == 2:
                 dec = p.decorardor_turno(p.turno_farmacia)
             elif opcion == 3:
                 dec = p.decorardor_turno(p.turno_cosmetica)
+            dec()
         except :
             print("Error, elige un numero valido")
         else:
-            print("""¿Otro turno?\n[1]-Si
-                  [2]-No""")
-            opcion = int(input())
-            if opcion == 1:
+            print("¿Otro turno?\n[1]-Si\n[2]-No")
+            opc = int(input())
+            if opc == 1:
                 system("cls")
                 continue
                 
