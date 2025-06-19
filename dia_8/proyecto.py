@@ -1,15 +1,36 @@
 import Proyectonumeros as p
-
+from os import system
 def menu():
-    dec = p.decorardor_turno()
+    
     turno = True
     opcion = 0
     while turno:
         print("""A cual de las areas deseas ir:\n[1]- Perfumeria
-              [2]- Farmacia
-              [3]- Cosmeticos""")
-        opcion = int(input())
-        if opcion == 1:
-            dec(p.turno_perfumeria)
-        elif opcion == 2:
-            dec(p.turno_farmacia)
+[2]- Farmacia
+[3]- Cosmeticos""")
+        try:
+            opcion = int(input())
+        
+            if opcion == 1:
+                dec = p.decorardor_turno(p.turno_perfumeria)
+                
+            elif opcion == 2:
+                dec = p.decorardor_turno(p.turno_farmacia)
+            elif opcion == 3:
+                dec = p.decorardor_turno(p.turno_cosmetica)
+        except :
+            print("Error, elige un numero valido")
+        else:
+            print("""¿Otro turno?\n[1]-Si
+                  [2]-No""")
+            opcion = int(input())
+            if opcion == 1:
+                system("cls")
+                continue
+                
+            else:
+                print("Adios!")
+                system("pause")
+                system("cls")
+                turno = False
+menu()

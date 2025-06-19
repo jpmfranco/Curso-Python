@@ -13,7 +13,7 @@ def turno_cosmetica():
 
 def decorardor_turno(funcion):
     print("Su turno es:  ")
-    funcion()
+    print(next(funcion()))
     print("""Aguarde y
            sera atendido
             """)
