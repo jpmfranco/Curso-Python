@@ -1,24 +1,37 @@
 import math as m
 def turno_farmacia():
-    for i in range(100000):
-        yield f"F-{i+1}"
+    i = 0
+    while True:
+        i+=1
+        yield f"F-{i}"
 
 def turno_perfumeria():
-    for i in range(100000):
-        yield f"P-{i+1}"
+    i = 0
+    while True:
+        i+=1
+        yield f"P-{i}"
 
 def turno_cosmetica():
-    for i in range(100000):
-        yield f"C-{i+1}"
+    i = 0
+    while True:
+        i+=1
+        yield f"C-{i}"
 
-def decorardor_turno(funcion):
-    
-    def subfuncion():
+p = turno_perfumeria()
+c = turno_cosmetica()
+f = turno_farmacia()       
+
+def decorardor_turno(letra):
+        print("-"*10)
         print("Su turno es:  ")
-        print(next(funcion()))
+        if letra == "P": 
+           print(next(p))
+        elif letra == "C":
+            print(next(c))
+        else:
+            print(next(f))
         print("""Aguarde y 
 sera atendido
                 """)
-    return subfuncion
-
+        print("-"*10)
 

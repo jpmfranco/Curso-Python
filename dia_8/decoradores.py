@@ -20,6 +20,8 @@ def decorar_saludo(funcion):
         print("hola")
         funcion(palabra)
         print("adios")
+        
+
     return otra_funcion
 
 
