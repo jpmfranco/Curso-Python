@@ -13,7 +13,7 @@
 # mi_dic = defaultdict(lambda: 'nada')
 # mi_dic['uno'] = 'verde'
 # print(mi_dic['dos'])
-from collections import namedtuple
+# from collections import namedtuple
 
-Persona = namedtuple('Persona',['nombre','altura','peso'])
-ariel = Persona('Ariel',1.76,79)
+# Persona = namedtuple('Persona',['nombre','altura','peso'])
+# ariel = Persona('Ariel',1.76,79)
