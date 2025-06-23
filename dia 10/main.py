@@ -1,6 +1,7 @@
 import pygame
 import random
 import math
+from pygame import mixer
 
 #Inicializa pygame
 pygame.init()
@@ -15,6 +16,10 @@ icono = pygame.image.load("dia 10\\ovni.png")
 pygame.display.set_icon(icono)
 backgro = pygame.image.load("dia 10\\fondo.jpg")
 
+# agregar musica
+mixer.music.load('dia 10\\MusicaFondo.mp3')
+mixer.music.set_volume(0.3)
+mixer.music.play(-1)
 
 # Jugador
 
@@ -44,7 +49,7 @@ bullet = pygame.image.load("dia 10\\bala.png")
 bullet_x = 0
 bullet_y = 500
 bullet_change_x = 0
-bullet_change_y = 0.3
+bullet_change_y = 1
 bullet_visible = False
 
 #Puntaje
@@ -54,8 +59,18 @@ p_x = 10
 p_y = 10
 
 
-# funcion mostrar puntaje
+# texto del final del juego
+fontfinal = pygame.font.Font("freesansbold.ttf",60)
 
+def finaltext():
+    fontFi = fontfinal.render("GAME OVER!",True, (255,255,255))
+    pantalla.blit(fontFi,(200, 250))
+
+
+# funcion mostrar puntaje
+def show_points(x, y):
+    text  = fuente.render(f"Points: {points}",True,(255,255,255))
+    pantalla.blit(text,(x,y))
 
 # funcion jugador
 def player1(x, y):
@@ -99,6 +114,8 @@ while se_ejecuta:
             if evento.key == pygame.K_RIGHT:
                 player_change_x = 0.2
             if evento.key == pygame.K_SPACE:
+                bulletsound = mixer.Sound('dia 10\\disparo.mp3')
+                bulletsound.play()
                 if not bullet_visible:
                     bullet_x = player_x
                     bullet1(bullet_x,bullet_y)
@@ -121,6 +138,15 @@ while se_ejecuta:
 
      # Modificar ubicacion del enemigo
     for e in range(cantEnemy):
+
+
+        # fin del juego
+        if enemy_y[e] > 500:
+            for k in range(cantEnemy):
+                enemy_y[k] = 1000
+            finaltext()
+            break
+
         enemy_x[e] += enemy_change_x[e]
 
     
@@ -136,6 +162,8 @@ while se_ejecuta:
         # Verificar colision
         colison = collition(enemy_x[e],enemy_y[e],bullet_x,bullet_y)
         if colison:
+            colisonSound = mixer.Sound("dia 10\\golpe.mp3")
+            colisonSound.play()
             bullet_y = 500
             bullet_visible = False
             points += 1
@@ -155,6 +183,9 @@ while se_ejecuta:
 
 
     player1(player_x,player_y)
+
+    #mostrar puntaje
+    show_points(p_x,p_y)
     
 
 
