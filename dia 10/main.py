@@ -25,11 +25,19 @@ player_y = 500
 player_change_x = 0
 
 # variables de Enemigo
-enemy = pygame.image.load("dia 10\\enemigo.png")
-enemy_x = random.randint(0,736)
-enemy_y = random.randint(50,200)
-enemy_change_x = 0.3
-enemy_change_y = 50
+enemy = []
+enemy_x = []
+enemy_y = []
+enemy_change_x = []
+enemy_change_y = []
+cantEnemy = 8
+
+for e in range(cantEnemy):
+    enemy.append(pygame.image.load("dia 10\\enemigo.png"))
+    enemy_x.append(random.randint(0,736))
+    enemy_y.append(random.randint(50,200))
+    enemy_change_x.append(0.3)
+    enemy_change_y.append(50)
 
 # variables de la bala
 bullet = pygame.image.load("dia 10\\bala.png")
@@ -41,7 +49,12 @@ bullet_visible = False
 
 #Puntaje
 points = 0
+fuente = pygame.font.Font('freesansbold.ttf',32)
+p_x = 10
+p_y = 10
 
+
+# funcion mostrar puntaje
 
 
 # funcion jugador
@@ -49,8 +62,8 @@ def player1(x, y):
     pantalla.blit(player,(x,y))
 
 # funcion enemigo
-def enemy1(x, y):
-    pantalla.blit(enemy,(x,y))
+def enemy1(x, y, ene):
+    pantalla.blit(enemy[ene],(x,y))
 
 # funcion bala
 def bullet1(x, y):
@@ -107,16 +120,28 @@ while se_ejecuta:
         player_x = 736
 
      # Modificar ubicacion del enemigo
-    enemy_x += enemy_change_x
+    for e in range(cantEnemy):
+        enemy_x[e] += enemy_change_x[e]
+
     
 
-    #Mantener dentro de bordes del enemigo
-    if enemy_x <= 0:
-        enemy_change_x = 0.2
-        enemy_y += enemy_change_y
-    elif enemy_x >= 736:
-       enemy_change_x = -0.2
-       enemy_y += enemy_change_y
+        #Mantener dentro de bordes del enemigo
+        if enemy_x[e] <= 0:
+            enemy_change_x[e] = 0.2
+            enemy_y[e] += enemy_change_y[e]
+        elif enemy_x[e] >= 736:
+            enemy_change_x[e] = -0.2
+            enemy_y[e] += enemy_change_y[e]
+
+        # Verificar colision
+        colison = collition(enemy_x[e],enemy_y[e],bullet_x,bullet_y)
+        if colison:
+            bullet_y = 500
+            bullet_visible = False
+            points += 1
+            enemy_x[e] = random.randint(0,736)
+            enemy_y[e] = random.randint(50,200)
+        enemy1(enemy_x[e],enemy_y[e], e)
 
     # Movimiento bala
     if bullet_y <= -64:
@@ -126,19 +151,11 @@ while se_ejecuta:
         bullet1(bullet_x,bullet_y)
         bullet_y -= bullet_change_y
 
-    # Verificar colision
-    colison = collition(enemy_x,enemy_y,bullet_x,bullet_y)
-    if colison:
-        bullet_y = 500
-        bullet_visible = False
-        points += 1
-        print(points)
-        enemy_x = random.randint(0,736)
-        enemy_y = random.randint(50,200)
+    
 
 
     player1(player_x,player_y)
-    enemy1(enemy_x,enemy_y)
+    
 
 
     # Actualiacion de pantalla
