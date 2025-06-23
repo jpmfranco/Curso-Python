@@ -2,6 +2,7 @@ import pygame
 import random
 import math
 from pygame import mixer
+import io
 
 #Inicializa pygame
 pygame.init()
@@ -45,6 +46,7 @@ for e in range(cantEnemy):
     enemy_change_y.append(50)
 
 # variables de la bala
+bullets = []
 bullet = pygame.image.load("dia 10\\bala.png")
 bullet_x = 0
 bullet_y = 500
@@ -52,8 +54,17 @@ bullet_change_x = 0
 bullet_change_y = 1
 bullet_visible = False
 
+def font_bytes(fuente):
+    # Abre el archivo TTF en modo lectura binaria
+    with open(fuente,'rb') as f:
+        #lee todos los bytes del archivo y los almacena en una variable
+        ttf_bytes = f.read()
+    # Crea un objeto BytesIO a partir de los bytes del archivo TTF
+    return io.BytesIO(ttf_bytes)
+
 #Puntaje
 points = 0
+font_as_bytes = font_bytes("dia 10\\FreeSansBold.ttf")
 fuente = pygame.font.Font('freesansbold.ttf',32)
 p_x = 10
 p_y = 10
@@ -63,7 +74,7 @@ p_y = 10
 fontfinal = pygame.font.Font("freesansbold.ttf",60)
 
 def finaltext():
-    fontFi = fontfinal.render("GAME OVER!",True, (255,255,255))
+    fontFi = font_as_bytes.render("GAME OVER!",True, (255,255,255))
     pantalla.blit(fontFi,(200, 250))
 
 
@@ -116,9 +127,15 @@ while se_ejecuta:
             if evento.key == pygame.K_SPACE:
                 bulletsound = mixer.Sound('dia 10\\disparo.mp3')
                 bulletsound.play()
-                if not bullet_visible:
-                    bullet_x = player_x
-                    bullet1(bullet_x,bullet_y)
+                newbullet = {
+                    "x": player_x,
+                    "y": player_y,
+                    "velocidad": -1
+                }
+                bullets.append(newbullet)
+                # if not bullet_visible:
+                #     bullet_x = player_x
+                #     bullet1(bullet_x,bullet_y)
             
 
         # Evento soltar flechas
@@ -160,24 +177,29 @@ while se_ejecuta:
             enemy_y[e] += enemy_change_y[e]
 
         # Verificar colision
-        colison = collition(enemy_x[e],enemy_y[e],bullet_x,bullet_y)
-        if colison:
-            colisonSound = mixer.Sound("dia 10\\golpe.mp3")
-            colisonSound.play()
-            bullet_y = 500
-            bullet_visible = False
-            points += 1
-            enemy_x[e] = random.randint(0,736)
-            enemy_y[e] = random.randint(50,200)
+        for bull in bullets:
+            colison = collition(enemy_x[e],enemy_y[e],bull["x"],bull["y"])
+            if colison:
+                colisonSound = mixer.Sound("dia 10\\golpe.mp3")
+                colisonSound.play()
+                bullets.remove(bull)
+                bullet_visible = False
+                points += 1
+                enemy_x[e] = random.randint(0,736)
+                enemy_y[e] = random.randint(50,200)
+                break
         enemy1(enemy_x[e],enemy_y[e], e)
 
     # Movimiento bala
-    if bullet_y <= -64:
-        bullet_y = 500
-        bullet_visible = False
-    if bullet_visible:
-        bullet1(bullet_x,bullet_y)
-        bullet_y -= bullet_change_y
+    for bull in bullets:
+        bull["y"] += bull["velocidad"]
+        pantalla.blit(bullet,(bull["x"]+16,bull["y"]+10))
+    # if bullet_y <= -64:
+    #     bullet_y = 500
+    #     bullet_visible = False
+    # if bullet_visible:
+    #     bullet1(bullet_x,bullet_y)
+    #     bullet_y -= bullet_change_y
 
     
 
