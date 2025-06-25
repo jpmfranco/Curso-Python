@@ -11,3 +11,11 @@ sopa = bs4.BeautifulSoup(resultado.text, 'lxml')
 
 # for p in columna_lateral:
 #     print(p.get_text())
+imagenes = sopa.select("img")[1]['src']
+print(imagenes)
+
+imagencurso1 = requests.get(imagenes)
+# print(imagencurso1.content)
+f = open("mi_imagen.jpg", "wb")
+f.write(imagencurso1.content)
+f.close()
