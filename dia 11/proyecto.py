@@ -29,9 +29,3 @@ for p in range(1,51):
 
 for b in br:
     print(b)
-
-
-
-
-
-
